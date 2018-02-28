@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>时钟表</title>
+		<style>
+			#cvt{
+				background:#ccc;margin: 0 auto;display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="cvt" width="600" height="600" style="border: 2px solid royalblue;"></canvas>
+	</body>
+</html>
+<script>
+	//画圆
+		var cvt = document.getElementById("cvt");
+		var p  =cvt.getContext("2d");
+		//函数封装
+		var hours = 0;
+		var minutes =0;
+		var second =0;
+		function clock(){
+		p.save();	
+			p.beginPath();
+			p.lineWidth=4;
+			p.strokeStyle="yellowgreen"
+			p.arc(300,300,200,0,2*Math.PI);
+			p.stroke();
+			p.closePath();
+		//时钟点
+			p.beginPath();
+			p.lineWidth="8";
+			p.strokeStyle="black";
+		    p.translate(300,300)
+//		    p.moveTo(0,-196);  //画线
+//			p.lineTo(0,-180);
+//		    p.closePath();
+//		    p.stroke();
+		//循环时钟点
+		    for(var s=0;s<=12;s++)
+		    {
+		    	p.rotate(30/180*Math.PI)
+		    	p.moveTo(0,-196);  //画线
+				p.lineTo(0,-180);
+				p.stroke();
+		    };
+		//循环分钟点    
+		    for(var i=0;i<=60;i++)
+		    {
+		    	p.beginPath();
+		    	p.lineWidth="3";
+		    	p.rotate(6/180*Math.PI)
+		    	p.moveTo(0,-196);  //画线
+				p.lineTo(0,-190);
+				p.stroke();
+				p.closePath();
+		    };
+		//时针    
+		    p.beginPath();
+			p.lineWidth="6";
+			p.rotate(hours/180*Math.PI)
+			p.moveTo(0,-110);  //画线
+			p.lineTo(0,10);
+			p.stroke();
+			p.closePath();
+			
+		//分针
+			p.beginPath();
+			p.lineWidth="4";
+			p.rotate(minutes/180*Math.PI)
+			p.moveTo(0,-140);  //画线
+			p.lineTo(0,15);
+			p.stroke();
+			p.closePath();
+			
+		//秒针
+			p.beginPath();
+			p.lineWidth="2";
+			p.strokeStyle="red";
+			p.rotate((second+=6)/180*Math.PI)
+			p.moveTo(0,-170);  //画线
+			p.lineTo(0,20);
+			p.stroke();
+			p.closePath();	
+			
+		//装饰时分秒钟交叉点
+			p.beginPath();
+			p.lineWidth="2";
+			p.strokeStyle="red";
+			//p.translate(300,300)
+			p.arc(0,0,4,0,2*Math.PI);
+			p.fillStyle="white";
+			p.fill();
+			p.stroke();
+			p.closePath();	
+			
+		//装饰秒钟
+			p.beginPath();
+			p.lineWidth="2";
+			p.strokeStyle="red";
+			p.arc(0,-140,4,0,2*Math.PI,false);
+			p.fillStyle="#cccccc";
+			p.fill();
+			p.stroke();
+			p.closePath();
+		p.restore()
+	}
+	//定时器运动
+	setInterval(function(){
+		p.clearRect(0,0,cvt.width,cvt.height);
+		clock()
+//		if (second>=60) {
+//			
+//		}
+			
+		
+	},1000)
+</script>
